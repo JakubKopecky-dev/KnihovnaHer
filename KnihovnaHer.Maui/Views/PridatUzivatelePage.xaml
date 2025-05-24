@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="KnihovnaHer.Maui.Views.PridatUzivatelePage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewModels="clr-namespace:KnihovnaHer.Maui.ViewModels"
+    Title="🆕 Vytvořit uživatele"
+    x:DataType="viewModels:PridatUzivateleViewModel">
+
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="16"
+            BackgroundColor="#f2f2f2"
+            Spacing="25">
+            <Label
+                Margin="0,0,0,-15"
+                FontSize="20"
+                Text="Email" />
+            <Entry Placeholder="Email" Text="{Binding Email}" />
+
+            <Label
+                Margin="0,0,0,-15"
+                FontSize="20"
+                Text="Rok vydání" />
+            <Entry
+                Keyboard="Password"
+                Placeholder="Heslo"
+                Text="{Binding Password}" />
+
+            <HorizontalStackLayout>
+
+                <CheckBox IsChecked="{Binding IsAdmin, Mode=OneWayToSource}" />
+                <Label
+                    Margin="0,0,0,-15"
+                    FontSize="20"
+                    Text="Administrátor" />
+            </HorizontalStackLayout>
+
+            <Button
+                x:Name="SaveButton"
+                Margin="0,10,0,0"
+                BackgroundColor="#4CAF50"
+                Clicked="OnUlozitClicked"
+                FontSize="18"
+                Text="Vytvořit uživatele"
+                TextColor="White" />
+
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="KnihovnaHer.Maui.Views.LoginPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewModels="clr-namespace:KnihovnaHer.Maui.ViewModels"
+    Title="Přihlášení"
+    x:DataType="viewModels:LoginViewModel"
+    BackgroundColor="#f2f2f2">
+
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="32"
+            Spacing="24"
+            VerticalOptions="Center">
+            <Border
+                Padding="24"
+                BackgroundColor="White"
+                Stroke="#ddd"
+                StrokeShape="RoundRectangle 16"
+                StrokeThickness="1">
+                <VerticalStackLayout Spacing="16">
+                    <Label
+                        FontSize="24"
+                        HorizontalOptions="Center"
+                        Text="Vítejte zpět!" />
+
+                    <Border
+                        Padding="10"
+                        BackgroundColor="#eeeeee"
+                        StrokeShape="RoundRectangle 8">
+                        <Entry
+                            Keyboard="Email"
+                            Placeholder="Email"
+                            Text="{Binding Email}" />
+                    </Border>
+
+                    <Border
+                        Padding="10"
+                        BackgroundColor="#eeeeee"
+                        StrokeShape="RoundRectangle 8">
+                        <Entry
+                            IsPassword="True"
+                            Placeholder="Heslo"
+                            Text="{Binding Password}" />
+                    </Border>
+
+                    <Label
+                        FontSize="12"
+                        HorizontalOptions="Center"
+                        IsVisible="{Binding HasError}"
+                        Text="{Binding ErrorMessage}"
+                        TextColor="Red" />
+
+                    <Button
+                        BackgroundColor="#007AFF"
+                        Clicked="OnLoginClicked"
+                        CornerRadius="12"
+                        Text="Přihlásit"
+                        TextColor="White" />
+
+                    <Button
+                        BackgroundColor="Transparent"
+                        Clicked="OnRegisterClicked"
+                        FontSize="14"
+                        Text="Nemáte účet? Registrujte se"
+                        TextColor="#007AFF" />
+                </VerticalStackLayout>
+            </Border>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

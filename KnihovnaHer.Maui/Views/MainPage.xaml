@@ -1,0 +1,150 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="KnihovnaHer.Maui.Views.MainPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:models="clr-namespace:KnihovnaHer.Dto;assembly=KnihovnaHer.Dto"
+    xmlns:viewModels="clr-namespace:KnihovnaHer.Maui.ViewModels"
+    Title="Můj seznam her"
+    x:DataType="viewModels:MainSeznamHerViewModel">
+
+
+
+    <Grid>
+        <ScrollView>
+            <VerticalStackLayout
+                Padding="16"
+                BackgroundColor="#f2f2f2"
+                Spacing="12">
+
+                <!--  Tlačítka  -->
+                <HorizontalStackLayout Padding="30" Spacing="25">
+
+                    <Button Clicked="OnSeznamHerClicked" Text="Seznam her" />
+
+
+
+                    <Button Clicked="OnSeznamHerAdminClicked" Text="Seznam her - Admin" />
+
+
+                    <Button Clicked="OnSeznamUzivateluClicked" Text="Seznam uživatelů - Admin" />
+
+
+                    <Button Clicked="OnOdhlasitClicled" Text="Odhlásit" />
+
+
+
+
+                </HorizontalStackLayout>
+
+
+                <!--  CollectionView (viditelné jen když nenačítá)  -->
+                <CollectionView IsVisible="{Binding IsLoading, Converter={StaticResource InverseBoolConverter}}" ItemsSource="{Binding StatusyHer}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:StatusHryViewDto">
+                            <Border
+                                Margin="0,5"
+                                Padding="12"
+                                BackgroundColor="White"
+                                Stroke="#cccccc"
+                                StrokeShape="RoundRectangle 12"
+                                StrokeThickness="1">
+
+                                <Grid
+                                    ColumnDefinitions="2*,2*,1*,3*,auto"
+                                    ColumnSpacing="10"
+                                    RowDefinitions="Auto">
+
+                                    <Label
+                                        Grid.Column="0"
+                                        FontAttributes="Bold"
+                                        FontSize="18"
+                                        Text="{Binding Hra.Nazev}"
+                                        TextColor="#222"
+                                        VerticalOptions="Center" />
+
+                                    <Label
+                                        Grid.Column="1"
+                                        FontSize="14"
+                                        Text="{Binding Hra.Vydavatel.Nazev}"
+                                        TextColor="#555"
+                                        VerticalOptions="Center" />
+
+                                    <Label
+                                        Grid.Column="2"
+                                        FontSize="14"
+                                        Text="{Binding Hra.RokVydani}"
+                                        TextColor="#777"
+                                        VerticalOptions="Center" />
+
+                                    <FlexLayout
+                                        Grid.Column="3"
+                                        AlignItems="Center"
+                                        BindableLayout.ItemsSource="{Binding Hra.Zanry}"
+                                        Direction="Row"
+                                        JustifyContent="Start"
+                                        Wrap="Wrap">
+                                        <BindableLayout.ItemTemplate>
+                                            <DataTemplate x:DataType="x:String">
+                                                <Border
+                                                    Margin="2"
+                                                    Padding="6,2"
+                                                    BackgroundColor="#e0e0e0"
+                                                    StrokeShape="RoundRectangle 8">
+                                                    <Label
+                                                        FontSize="12"
+                                                        Text="{Binding}"
+                                                        TextColor="#333" />
+                                                </Border>
+                                            </DataTemplate>
+                                        </BindableLayout.ItemTemplate>
+                                    </FlexLayout>
+
+                                    <HorizontalStackLayout
+                                        Grid.Column="4"
+                                        HorizontalOptions="End"
+                                        Spacing="15"
+                                        VerticalOptions="Center">
+
+                                        <Button
+                                            Padding="8,4"
+                                            BackgroundColor="#FFC107"
+                                            CornerRadius="10"
+                                            FontSize="15"
+                                            HeightRequest="36"
+                                            HorizontalOptions="Center"
+                                            Text="Detail"
+                                            TextColor="Black"
+                                            WidthRequest="90" />
+
+                                        <Button
+                                            Padding="8,4"
+                                            BackgroundColor="#F44336"
+                                            Clicked="OnDeleteStatusHryClicked"
+                                            CornerRadius="10"
+                                            FontSize="15"
+                                            HeightRequest="30"
+                                            HorizontalOptions="Center"
+                                            Text="Odebrat"
+                                            TextColor="Black"
+                                            WidthRequest="90" />
+                                    </HorizontalStackLayout>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!--  Spinner přes CollectionView  -->
+        <ActivityIndicator
+            HeightRequest="80"
+            HorizontalOptions="Center"
+            IsRunning="{Binding IsLoading}"
+            IsVisible="{Binding IsLoading}"
+            VerticalOptions="Center"
+            WidthRequest="80"
+            Color="DarkBlue" />
+    </Grid>
+</ContentPage>

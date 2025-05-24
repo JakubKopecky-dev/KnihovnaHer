@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="KnihovnaHer.Maui.Views.RegisterPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewModels="clr-namespace:KnihovnaHer.Maui.ViewModels"
+    Title="Registrace"
+    x:DataType="viewModels:RegisterViewModel"
+    BackgroundColor="#f2f2f2">
+
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="32"
+            Spacing="24"
+            VerticalOptions="Center">
+            <Border
+                Padding="24"
+                BackgroundColor="White"
+                Stroke="#ddd"
+                StrokeShape="RoundRectangle 16"
+                StrokeThickness="1">
+                <VerticalStackLayout Spacing="16">
+                    <Label
+                        FontSize="24"
+                        HorizontalOptions="Center"
+                        Text="Vytvořte si účet" />
+
+                    <Border
+                        Padding="10"
+                        BackgroundColor="#eeeeee"
+                        StrokeShape="RoundRectangle 8">
+                        <Entry
+                            Keyboard="Email"
+                            Placeholder="Email"
+                            Text="{Binding Email}" />
+                    </Border>
+
+                    <Border
+                        Padding="10"
+                        BackgroundColor="#eeeeee"
+                        StrokeShape="RoundRectangle 8">
+                        <Entry
+                            IsPassword="True"
+                            Placeholder="Heslo"
+                            Text="{Binding Password}" />
+                    </Border>
+
+                    <Border
+                        Padding="10"
+                        BackgroundColor="#eeeeee"
+                        StrokeShape="RoundRectangle 8">
+                        <Entry
+                            IsPassword="True"
+                            Placeholder="Potvrdit heslo"
+                            Text="{Binding ConfirmPassword}" />
+                    </Border>
+
+                    <Label
+                        FontSize="12"
+                        HorizontalOptions="Center"
+                        IsVisible="{Binding HasError}"
+                        Text="{Binding ErrorMessage}"
+                        TextColor="Red" />
+
+                    <Button
+                        BackgroundColor="#28a745"
+                        Clicked="OnRegisterClicked"
+                        CornerRadius="12"
+                        Text="Registrovat"
+                        TextColor="White" />
+
+                    <Button
+                        BackgroundColor="Transparent"
+                        Clicked="OnLoginClicked"
+                        FontSize="14"
+                        Text="Zpět na přihlášení"
+                        TextColor="#007AFF" />
+                </VerticalStackLayout>
+            </Border>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

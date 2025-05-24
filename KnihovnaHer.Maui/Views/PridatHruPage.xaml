@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="KnihovnaHer.Maui.Views.PridatHruPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:models="clr-namespace:KnihovnaHer.Maui.UiModels"
+    xmlns:viewModels="clr-namespace:KnihovnaHer.Maui.ViewModels"
+    Title="🆕 Přidat novou hru"
+    x:DataType="viewModels:VytvoritHruViewModel">
+
+
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="16"
+            BackgroundColor="#f2f2f2"
+            Spacing="25">
+            <Label
+                Margin="0,0,0,-15"
+                FontSize="20"
+                Text="Název hry" />
+            <Entry Placeholder="Název hry" Text="{Binding Nazev}" />
+
+            <Label
+                Margin="0,0,0,-15"
+                FontSize="20"
+                Text="Rok vydání" />
+            <Entry
+                Keyboard="Numeric"
+                Placeholder="Např. 2025"
+                Text="{Binding RokVydani}" />
+
+            <Label
+                Margin="0,0,0,-15"
+                FontSize="20"
+                Text="Žánry" />
+            <CollectionView ItemsSource="{Binding ZanryKVyberu}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:VyberZanr">
+                        <HorizontalStackLayout>
+                            <CheckBox IsChecked="{Binding JeVybrany, Mode=TwoWay}" />
+                            <Label Text="{Binding Nazev}" VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+
+            <Label
+                Margin="0,0,0,-15"
+                FontSize="20"
+                Text="Vydavatel" />
+            <Picker
+                ItemDisplayBinding="{Binding Nazev}"
+                ItemsSource="{Binding Vydavatele}"
+                SelectedItem="{Binding VybranyVydavatele}" />
+
+            <Button
+                x:Name="SaveButton"
+                Margin="0,10,0,0"
+                BackgroundColor="#4CAF50"
+                Clicked="OnPridatHruClicked"
+                FontSize="18"
+                Text="Přidat hru"
+                TextColor="White" />
+
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
