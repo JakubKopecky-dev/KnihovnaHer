@@ -18,18 +18,7 @@ namespace KnihovnaHer.Maui.Services
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
             var token = await tokenStorageService.GetTokenAsync();
-            Debug.WriteLine($"[AuthHandler] Přidávám token: {token}");
-
-            Debug.WriteLine($"[AuthHandler] request: {request}");
-            Debug.WriteLine($"[AuthHandler] Přidávám cancelattionTokken: {cancellationToken.IsCancellationRequested}");
-            Debug.WriteLine("[AuthHandler] URL: " + request.RequestUri);
-            Debug.WriteLine("[AuthHandler] Header: " + request.Headers);
-            Debug.WriteLine("[AuthHandler] Auth Header: " + request.Headers.Authorization);
-
-
-
-
-
+         
 
 
             if (!string.IsNullOrWhiteSpace(token))
@@ -50,7 +39,11 @@ namespace KnihovnaHer.Maui.Services
             }
             Debug.WriteLine("==== END HEADERS ====");
 
+
+
             var response = await base.SendAsync(request, cancellationToken);
+
+
             Debug.WriteLine($"[AuthHandler] Response status code: {response.StatusCode}");
             if (response.Content != null)
             {

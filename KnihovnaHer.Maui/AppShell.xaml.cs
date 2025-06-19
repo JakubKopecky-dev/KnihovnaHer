@@ -17,6 +17,7 @@ namespace KnihovnaHer.Maui
             Routing.RegisterRoute(nameof(SeznamHerObecnyUzivatelPage),typeof(SeznamHerObecnyUzivatelPage));
             Routing.RegisterRoute(nameof(SeznamUzivateluPage),typeof(SeznamUzivateluPage));
             Routing.RegisterRoute(nameof(PridatUzivatelePage),typeof(PridatUzivatelePage));
+            Routing.RegisterRoute(nameof(AdminPrehledPage), typeof(AdminPrehledPage));
 
 
 

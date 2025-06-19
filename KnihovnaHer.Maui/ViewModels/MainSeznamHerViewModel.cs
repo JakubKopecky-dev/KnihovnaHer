@@ -9,10 +9,11 @@ using KnihovnaHer.Maui.Services;
 
 namespace KnihovnaHer.Maui.ViewModels
 {
-    public partial class MainSeznamHerViewModel(IApiService apiService) : BaseViewModel
+    public partial class MainSeznamHerViewModel(IApiService apiService, ITokenStorageService tokenStorageService) : BaseViewModel
     {
 
         private readonly IApiService apiService = apiService;
+        private readonly ITokenStorageService tokenStorageService = tokenStorageService;
 
         public ObservableCollection<StatusHryViewDto> StatusyHer { get; set; } = [];
 
@@ -22,6 +23,14 @@ namespace KnihovnaHer.Maui.ViewModels
         {
             get => isLoading;
             set => SetProperty(ref isLoading, value);
+        }
+
+        private bool isAdmin;
+
+        public bool IsAdmin
+        {
+            get => isAdmin;
+            set => SetProperty(ref isAdmin, value);
         }
 
       
@@ -60,6 +69,7 @@ namespace KnihovnaHer.Maui.ViewModels
         }
 
 
+        public async Task LoadAdminStatus() => IsAdmin = await tokenStorageService.IsAdminAsync();
 
 
 

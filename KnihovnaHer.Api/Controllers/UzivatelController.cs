@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace KnihovnaHer.Api.Controllers
 {
 
-   // [Authorize(Roles = UserRoles.Admin)]
+    [Authorize(Roles = UserRoles.Admin)]
     [ApiController]
     [Route("api/[controller]")]
 

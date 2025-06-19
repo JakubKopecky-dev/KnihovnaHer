@@ -11,6 +11,7 @@ namespace KnihovnaHer.Maui.Services
         void DeleteToken();
         Task<string?> GetTokenAsync();
         Task<bool> HasTokenAsync();
+        Task<bool> IsAdminAsync();
         Task<bool> IsTokenValidAsync();
         Task SaveTokenAsync(string token);
     }

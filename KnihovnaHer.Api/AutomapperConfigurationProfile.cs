@@ -42,7 +42,7 @@ namespace KnihovnaHer.Api
 
 
 
-            CreateMap<StatusHryEditDto, StatusHry>();
+            CreateMap<StatusHryUpdateDto, StatusHry>();
             CreateMap<StatusHryCreateDto, StatusHry>();
             CreateMap<StatusHry, StatusHryViewDto>();
       

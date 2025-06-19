@@ -12,23 +12,19 @@ namespace KnihovnaHer.Data.Repositories
     public class StatusHryRepository(KnihovnaHerDbContext knihovnaHerDbContext) : BaseRepository<StatusHry>(knihovnaHerDbContext), IStatusHryRepository
     {
 
-        public IList<StatusHry> FindByUzivatelId(string uzivatelId)
-        {
-            return dbSet.Where(a => a.UzivatelId == uzivatelId).ToList();   
+        public async Task<IList<StatusHry>> FindByUzivatelIdAsync(string uzivatelId) => await dbSet.Where(a => a.UzivatelId == uzivatelId).ToListAsync();
 
-        }
 
-        public IList<StatusHry> FindByHraId(uint hraId)
-        {
-            return dbSet.Where(a => a.HraId == hraId).ToList();
-        }
+        public async  Task<IList<StatusHry>> FindByHraIdAsync(uint hraId) => await dbSet.Where(a => a.HraId == hraId).ToListAsync();
 
-        public StatusHry? FindByIdWithInclude(uint statusHryId)
+
+
+        public async Task<StatusHry?> FindByIdWithIncludeAsync(uint statusHryId)
         {
-            return dbSet
+            return await dbSet
                 .Include(s => s.Hra)
                 .Include(s => s.Uzivatel)
-                .Where(s => s.StatusHryId == statusHryId).FirstOrDefault();
+                .Where(s => s.StatusHryId == statusHryId).FirstOrDefaultAsync();
         }
 
     }

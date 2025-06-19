@@ -18,6 +18,7 @@ public partial class SeznamHerObecnyUzivatelPage : ContentPage
         if (BindingContext is SeznamHerViewModel viewModel)
         {
             await viewModel.LoadHryAsync();
+            
         }
     }
 

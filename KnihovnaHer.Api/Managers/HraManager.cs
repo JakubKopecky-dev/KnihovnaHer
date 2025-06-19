@@ -15,18 +15,18 @@ namespace KnihovnaHer.Api.Managers
         private readonly IMapper mapper = mapper;
 
 
-        public IList<HraDto> GetAllHra()
+        public async Task<IList<HraDto>> GetAllHraAsync()
         {
-            IList<Hra> hra = hraRepository.GetAll();
+            IList<Hra> hra = await hraRepository.GetAllAsync();
 
             return mapper.Map<IList<HraDto>>(hra);
 
         }
 
-        public HraDto? GetHra(uint id)
+        public async Task<HraDto?> GetHraAsync(uint id)
         {
 
-            Hra? hra = hraRepository.FindById(id);
+            Hra? hra = await hraRepository.FindByIdAsync(id);
             
             if(hra is null) 
                 return null;
@@ -35,15 +35,15 @@ namespace KnihovnaHer.Api.Managers
 
         }
 
-        public HraDto AddHra(HraCreateEditDto hraDto)
+        public async Task<HraDto> AddHraAsync(HraCreateEditDto hraDto)
         {
             Hra hra = mapper.Map<Hra>(hraDto);
             hra.HraId = default;
-            hra.Zanry.AddRange(zanrRepository.FindAllByNames(hraDto.Zanry));
-            Hra addedHra = hraRepository.Insert(hra);
+            hra.Zanry.AddRange(await zanrRepository.FindAllByNamesAsync(hraDto.Zanry));
+            await hraRepository.InsertAsync(hra);
 
 
-            Hra hraVratit = hraRepository.FindById(hra.HraId)!;
+            Hra hraVratit = (await hraRepository.FindByIdAsync(hra.HraId))!;
                 
             
 
@@ -51,11 +51,11 @@ namespace KnihovnaHer.Api.Managers
 
         }
 
-        public HraDto? UpdateHra(uint hraId, HraCreateEditDto hraDto)
+        public async Task<HraDto?> UpdateHra(uint hraId, HraCreateEditDto hraDto)
         {
         
 
-           Hra? hraDb = hraRepository.FindById(hraId);
+           Hra? hraDb = await hraRepository.FindByIdAsync(hraId);
             if (hraDb is null)
                 return null;
 
@@ -63,7 +63,7 @@ namespace KnihovnaHer.Api.Managers
   
           
 
-            IList<Zanr> zanry = zanrRepository.FindAllByNames(hraDto.Zanry);
+            IList<Zanr> zanry = await zanrRepository.FindAllByNamesAsync(hraDto.Zanry);
 
             foreach (Zanr z in hraDb.Zanry.Except(zanry).ToList()) 
             {
@@ -77,7 +77,7 @@ namespace KnihovnaHer.Api.Managers
             }
 
 
-            Hra uppdatedHra = hraRepository.Update(hraDb);
+            Hra uppdatedHra = await hraRepository.UpdateAsync(hraDb);
 
             return mapper.Map<HraDto>(uppdatedHra);
 
@@ -85,22 +85,22 @@ namespace KnihovnaHer.Api.Managers
         }
 
 
-        public HraDto? DeleteHra(uint hraId)
+        public async Task<HraDto?> DeleteHra(uint hraId)
         {
-            if (!hraRepository.ExistsWithId(hraId))
+            if (!(await hraRepository.ExistsWithIdAsync(hraId)))
                 return null;
 
-            Hra hra = hraRepository.FindById(hraId)!;
+            Hra hra = (await hraRepository.FindByIdAsync(hraId))!;
             HraDto hraDto = mapper.Map<HraDto>(hra);
 
             hra.Zanry.Clear();
 
-            var statusyHer = statusHryRepository.FindByHraId(hraId);
+            var statusyHer = await statusHryRepository.FindByHraIdAsync(hraId);
             foreach(var stat  in statusyHer)
-                statusHryRepository.Delete(stat.StatusHryId);
+              await statusHryRepository.DeleteAsync(stat.StatusHryId);
 
-            hraRepository.Update(hra);
-            hraRepository.Delete(hraId);
+           await hraRepository.UpdateAsync(hra);
+           await hraRepository.DeleteAsync(hraId);
 
             return hraDto;
 

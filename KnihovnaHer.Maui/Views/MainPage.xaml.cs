@@ -33,8 +33,11 @@ namespace KnihovnaHer.Maui.Views
 
             Debug.WriteLine("Můj token před načtením statusů: " + token);
 
-           if (BindingContext is MainSeznamHerViewModel viewModel)
-               await viewModel.LoadStatusHer();
+            if (BindingContext is MainSeznamHerViewModel viewModel)
+            {
+                await viewModel.LoadAdminStatus();
+                await viewModel.LoadStatusHer();
+            }
         }
 
         
@@ -44,11 +47,7 @@ namespace KnihovnaHer.Maui.Views
 
 
 
-        private async void OnSeznamHerAdminClicked(object sender, EventArgs e)
-        { 
-
-            await Shell.Current.GoToAsync(nameof(SeznamHerPage));
-        }
+      
 
 
         private async void OnOdhlasitClicled(object sender, EventArgs e)
@@ -109,11 +108,11 @@ namespace KnihovnaHer.Maui.Views
 
 
 
-        private async void OnSeznamUzivateluClicked(Object sender, EventArgs e)
+      
+        private async void OnAdminClicked(object sender, EventArgs e)
         {
-            await Shell.Current.GoToAsync(nameof(SeznamUzivateluPage));
+            await Shell.Current.GoToAsync(nameof(AdminPrehledPage));
         }
-
 
 
       

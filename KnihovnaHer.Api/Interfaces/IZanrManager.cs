@@ -4,9 +4,9 @@ namespace KnihovnaHer.Api.Interfaces
 {
     public interface IZanrManager
     {
-        ZanrDto AddZanr(ZanrDto zanrDto);
-        ZanrDto? DeleteZanr(uint zanrId);
-        IList<ZanrDto> GetAllZanr();
-        ZanrDto? GetZanr(uint zanrId);
+        Task<ZanrDto> AddZanrAsync(ZanrDto zanrDto);
+        Task<ZanrDto?> DeleteZanrAsync(uint zanrId);
+        Task<IList<ZanrDto>> GetAllZanrAsync();
+        Task<ZanrDto?> GetZanrAsync(uint zanrId);
     }
 }

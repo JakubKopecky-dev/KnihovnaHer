@@ -12,17 +12,17 @@ namespace KnihovnaHer.Api.Managers
         private readonly IZanrRepository zanrRepository = zanrRepository;
 
 
-        public IList<ZanrDto> GetAllZanr()
+        public async Task<IList<ZanrDto>> GetAllZanrAsync()
         {
-            IList<Zanr> zanry = zanrRepository.GetAll();
+            IList<Zanr> zanry = await zanrRepository.GetAllAsync();
             
             return mapper.Map<IList<ZanrDto>>(zanry);
         }
         
 
-        public ZanrDto? GetZanr(uint zanrId)
+        public async Task<ZanrDto?> GetZanrAsync(uint zanrId)
         {
-            Zanr? zanr = zanrRepository.FindById(zanrId);
+            Zanr? zanr = await zanrRepository.FindByIdAsync(zanrId);
 
             if(zanr is null) 
                 return null;
@@ -34,11 +34,11 @@ namespace KnihovnaHer.Api.Managers
 
 
 
-        public ZanrDto AddZanr(ZanrDto zanrDto)
+        public async Task<ZanrDto> AddZanrAsync(ZanrDto zanrDto)
         {
             Zanr zanr = mapper.Map<Zanr>(zanrDto);
             zanr.ZanrId = default;
-            Zanr addedZanr = zanrRepository.Insert(zanr);
+            Zanr addedZanr = await zanrRepository.InsertAsync(zanr);
 
             return mapper.Map<ZanrDto>(addedZanr);
 
@@ -46,19 +46,19 @@ namespace KnihovnaHer.Api.Managers
 
       
 
-        public ZanrDto? DeleteZanr(uint zanrId)
+        public async Task<ZanrDto?> DeleteZanrAsync(uint zanrId)
         {
-            if (!zanrRepository.ExistsWithId(zanrId))
+            if (! await zanrRepository.ExistsWithIdAsync(zanrId))
                 return null;
 
-            Zanr zanrDb = zanrRepository.FindById(zanrId)!;
+            Zanr zanrDb = (await zanrRepository.FindByIdAsync(zanrId))!;
 
             ZanrDto deletedZanr = mapper.Map<ZanrDto>(zanrDb);
 
             zanrDb.Hry.Clear();
-            zanrRepository.Update(zanrDb);
+            await zanrRepository.UpdateAsync(zanrDb);
            
-            zanrRepository.Delete(zanrId);
+            await zanrRepository.DeleteAsync(zanrId);
 
             return deletedZanr;
 

@@ -12,19 +12,10 @@ namespace KnihovnaHer.Api.Controllers
     [Authorize(Roles =UserRoles.User)]
     [ApiController]
     [Route("api/[controller]")]
-    public class StatusHryController : ControllerBase
+    public class StatusHryController(IStatusHryManager statusHryManager, UserManager<Uzivatel> userManager) : ControllerBase
     {
-        private readonly IStatusHryManager statusHryManager;
-        private readonly UserManager<Uzivatel> userManager;
-
-        public StatusHryController(IStatusHryManager statusHryManager, UserManager<Uzivatel> userManager)
-        {
-            this.statusHryManager = statusHryManager;
-            this.userManager = userManager;
-            Debug.WriteLine("✅ StatusHryController byl vytvořen");
-
-        } 
-
+        private readonly IStatusHryManager statusHryManager = statusHryManager;
+        private readonly UserManager<Uzivatel> userManager = userManager;
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<StatusHryViewDto>>> GetStatusHry()
@@ -35,7 +26,7 @@ namespace KnihovnaHer.Api.Controllers
             if(user is null)
                 return Unauthorized();
                 
-            var statusHry = await statusHryManager.GetAllStatusForUser(user.Id);
+            var statusHry = await statusHryManager.GetAllStatusForUserAsync(user.Id);
 
             return Ok(statusHry);
             
@@ -54,7 +45,7 @@ namespace KnihovnaHer.Api.Controllers
 
             
 
-            StatusHryViewDto status = statusHryManager.AddStatusHry(statusHryCreateDto,user.Id);
+            StatusHryViewDto status = await statusHryManager.AddStatusHryAsync(statusHryCreateDto,user.Id);
 
             return CreatedAtAction(nameof(GetStatusHry), new {uzivatelId = user.Id}, status);
 
@@ -63,9 +54,9 @@ namespace KnihovnaHer.Api.Controllers
 
 
         [HttpPut("{statusHryId}")]
-        public IActionResult EditStatusHry(uint statusHryId,[FromBody]StatusHryEditDto statusHryEditDto)
+        public async Task<IActionResult> EditStatusHry(uint statusHryId,[FromBody]StatusHryUpdateDto statusHryEditDto)
         {
-            StatusHryViewDto? updatedStatusHry = statusHryManager.EditStatusHry(statusHryId, statusHryEditDto);
+            StatusHryViewDto? updatedStatusHry = await statusHryManager.UpdateStatusHryAsync(statusHryId, statusHryEditDto);
             if (updatedStatusHry is null)
                 return NotFound();
 
@@ -76,9 +67,9 @@ namespace KnihovnaHer.Api.Controllers
 
 
         [HttpDelete("{statusHryId}")]
-        public IActionResult DeleteStatusHry(uint statusHryId)
+        public async Task<IActionResult> DeleteStatusHry(uint statusHryId)
         {
-            StatusHryViewDto? statusHryViewDto = statusHryManager.DeleteStatusHry(statusHryId);
+            StatusHryViewDto? statusHryViewDto = await statusHryManager.DeleteStatusHry(statusHryId);
             if(statusHryViewDto is null)
                 return NotFound();
             return Ok(statusHryViewDto);

@@ -17,7 +17,7 @@ namespace KnihovnaHer.Data.Models
         public int RokVydani { get; set; }
 
       
-        public virtual List<Zanr> Zanry { get; set; } = [];
+      public virtual List<Zanr> Zanry { get; set; } = [];
 
         public virtual Vydavatel? Vydavatel { get; set; }
 
@@ -25,6 +25,9 @@ namespace KnihovnaHer.Data.Models
 
 
         public virtual List<StatusHry> StatusHer { get; set; } = [];
+
+       
+
 
 
 

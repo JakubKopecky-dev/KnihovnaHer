@@ -29,10 +29,14 @@ namespace KnihovnaHer.Maui
 
             builder.Services.AddHttpClient<IApiService, ApiService>(client =>
             {
-                client.BaseAddress = new Uri("https://localhost:7189/api/");
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            })
-                .AddHttpMessageHandler<AuthorizationHandler>();
+                #if ANDROID
+                                client.BaseAddress = new Uri("http://10.0.2.2:5000/api/");
+                #else
+                    client.BaseAddress = new Uri("https://localhost:7189/api/");
+#endif
+              client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                            })
+.AddHttpMessageHandler<AuthorizationHandler>();
 
 
 

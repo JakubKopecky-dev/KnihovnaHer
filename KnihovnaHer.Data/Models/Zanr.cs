@@ -16,6 +16,9 @@ namespace KnihovnaHer.Data.Models
         [MinLength(2)]
         public string Nazev { get; set; } = "";
 
-        public virtual List<Hra> Hry { get; set; } = new();
+        public virtual List<Hra> Hry { get; set; } = [];
+
+       
+
     }
 }

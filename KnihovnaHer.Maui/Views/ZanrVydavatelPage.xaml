@@ -2,39 +2,48 @@
     x:Class="KnihovnaHer.Maui.Views.ZanrVydavatelPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:KnihovnaHer.Maui"
     xmlns:models="clr-namespace:KnihovnaHer.Dto;assembly=KnihovnaHer.Dto"
     xmlns:viewModels="clr-namespace:KnihovnaHer.Maui.ViewModels"
     Title="🎭🏢 Žánry a Vydavatelé"
     x:DataType="viewModels:ZanrVydavatelViewModel">
 
-    <Grid>
+    <Grid BackgroundColor="#f9f9f9">
         <ScrollView>
             <VerticalStackLayout
                 Padding="16"
-                BackgroundColor="#f9f9f9"
+                HorizontalOptions="Center"
+                MaximumWidthRequest="900"
                 Spacing="20">
 
                 <!--  Tlačítka  -->
-                <HorizontalStackLayout Margin="0,0,0,7" Spacing="30">
+                <FlexLayout
+                    Margin="0,0,0,10"
+                    AlignItems="Center"
+                    Direction="Row"
+                    JustifyContent="Start"
+                    Wrap="Wrap">
                     <Button
-                        Padding="10"
+                        Margin="5"
                         BackgroundColor="#4caf50"
                         Clicked="OnAddZanrClicked"
-                        FontSize="16"
-                        HorizontalOptions="Center"
+                        CornerRadius="8"
+                        FontSize="14"
+                        HeightRequest="40"
                         Text="Přidat žánr"
-                        TextColor="White" />
+                        TextColor="White"
+                        WidthRequest="140" />
 
                     <Button
-                        Padding="10"
+                        Margin="5"
                         BackgroundColor="#2196f3"
                         Clicked="OnAddVydavatelClicked"
-                        FontSize="16"
-                        HorizontalOptions="Center"
+                        CornerRadius="8"
+                        FontSize="14"
+                        HeightRequest="40"
                         Text="Přidat vydavatele"
-                        TextColor="White" />
-                </HorizontalStackLayout>
+                        TextColor="White"
+                        WidthRequest="170" />
+                </FlexLayout>
 
                 <!--  Žánry  -->
                 <Label
@@ -48,16 +57,12 @@
                         <DataTemplate x:DataType="models:ZanrDto">
                             <Border
                                 Margin="0,5"
-                                Padding="10"
+                                Padding="12"
                                 BackgroundColor="White"
                                 Stroke="#ccc"
-                                StrokeShape="RoundRectangle 10"
+                                StrokeShape="RoundRectangle 12"
                                 StrokeThickness="1">
-                                <Grid
-                                    ColumnDefinitions="*,auto"
-                                    ColumnSpacing="10"
-                                    RowDefinitions="Auto">
-
+                                <Grid ColumnDefinitions="*,auto" ColumnSpacing="10">
                                     <Label
                                         FontSize="16"
                                         Text="{Binding Nazev}"
@@ -66,11 +71,14 @@
 
                                     <Button
                                         Grid.Column="1"
-                                        Padding="5"
                                         BackgroundColor="#F44336"
                                         Clicked="OnDeleteZanrClicked"
+                                        CornerRadius="8"
+                                        FontSize="14"
+                                        HeightRequest="36"
                                         Text="Odstranit"
-                                        TextColor="Black" />
+                                        TextColor="White"
+                                        WidthRequest="100" />
                                 </Grid>
                             </Border>
                         </DataTemplate>
@@ -79,6 +87,7 @@
 
                 <!--  Vydavatelé  -->
                 <Label
+                    Margin="0,20,0,0"
                     FontAttributes="Bold"
                     FontSize="20"
                     Text="🏢 Vydavatelé"
@@ -89,16 +98,12 @@
                         <DataTemplate x:DataType="models:VydavatelDto">
                             <Border
                                 Margin="0,5"
-                                Padding="10"
+                                Padding="12"
                                 BackgroundColor="White"
                                 Stroke="#ccc"
-                                StrokeShape="RoundRectangle 10"
+                                StrokeShape="RoundRectangle 12"
                                 StrokeThickness="1">
-                                <Grid
-                                    ColumnDefinitions="*,auto"
-                                    ColumnSpacing="10"
-                                    RowDefinitions="Auto">
-
+                                <Grid ColumnDefinitions="*,auto" ColumnSpacing="10">
                                     <Label
                                         FontSize="16"
                                         Text="{Binding Nazev}"
@@ -107,11 +112,14 @@
 
                                     <Button
                                         Grid.Column="1"
-                                        Padding="5"
                                         BackgroundColor="#F44336"
                                         Clicked="OnDeleteVydavatelClicked"
+                                        CornerRadius="8"
+                                        FontSize="14"
+                                        HeightRequest="36"
                                         Text="Odstranit"
-                                        TextColor="Black" />
+                                        TextColor="White"
+                                        WidthRequest="100" />
                                 </Grid>
                             </Border>
                         </DataTemplate>
@@ -120,7 +128,7 @@
             </VerticalStackLayout>
         </ScrollView>
 
-        <!--  Spinner  -->
+        <!--  Loader  -->
         <ActivityIndicator
             HeightRequest="80"
             HorizontalOptions="Center"

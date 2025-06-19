@@ -17,11 +17,11 @@ namespace KnihovnaHer.Data.Repositories
         protected readonly DbSet<TEntity> dbSet = knihovnaHerDbContext.Set<TEntity>();
 
 
-        public TEntity? FindById(uint id) => dbSet.Find(id);
+        public async Task<TEntity?> FindByIdAsync(uint id) => await dbSet.FindAsync(id);
 
-        public bool ExistsWithId(uint id)
+        public async Task<bool> ExistsWithIdAsync(uint id)
         {
-            TEntity? entity = dbSet.Find(id);
+            TEntity? entity =  await dbSet.FindAsync(id);
 
             if (entity is not null)
                 knihovnaHerDbContex.Entry(entity).State = EntityState.Detached;
@@ -30,27 +30,27 @@ namespace KnihovnaHer.Data.Repositories
         }
 
 
-        public IList<TEntity> GetAll() => dbSet.ToList();
+        public async Task<IList<TEntity>> GetAllAsync() => await dbSet.ToListAsync();
 
-        public TEntity Insert(TEntity entity)
+        public async Task<TEntity> InsertAsync(TEntity entity)
         {
-           EntityEntry<TEntity> entityEntry = dbSet.Add(entity);
-            knihovnaHerDbContex.SaveChanges();
+           EntityEntry<TEntity> entityEntry = await dbSet.AddAsync(entity);
+           await knihovnaHerDbContex.SaveChangesAsync();
 
             return entityEntry.Entity;
         }
 
-        public TEntity Update(TEntity entity)
+        public async Task<TEntity> UpdateAsync(TEntity entity)
         {
             EntityEntry<TEntity> entityEntry = dbSet.Update(entity);
-            knihovnaHerDbContex.SaveChanges();
+           await knihovnaHerDbContex.SaveChangesAsync();
 
             return entityEntry.Entity;
         }
 
-        public void Delete(uint id)
+        public async Task DeleteAsync(uint id)
         {
-            TEntity? entity = dbSet.Find(id);
+            TEntity? entity = await dbSet.FindAsync(id);
 
             if (entity is null)
                 return;
@@ -58,7 +58,7 @@ namespace KnihovnaHer.Data.Repositories
             try
             {
                 dbSet.Remove(entity);
-                knihovnaHerDbContex.SaveChanges();
+                await knihovnaHerDbContex.SaveChangesAsync();
             }
             catch
             {

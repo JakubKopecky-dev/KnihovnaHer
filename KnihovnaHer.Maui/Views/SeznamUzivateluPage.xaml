@@ -8,12 +8,11 @@
     Title="Seznam uživatelů"
     x:DataType="viewmodel:SeznamUzivateluViewModel">
 
-    <Grid RowDefinitions="Auto,*"
-          BackgroundColor="#f2f2f2">
+    <Grid BackgroundColor="#f2f2f2" RowDefinitions="Auto,*">
         <!--  Hlavička s tlačítkem  -->
         <VerticalStackLayout
             Grid.Row="0"
-            Padding="16"     
+            Padding="16"
             Spacing="12">
 
             <HorizontalStackLayout Margin="0,0,0,7" Spacing="30">

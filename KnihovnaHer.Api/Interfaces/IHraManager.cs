@@ -4,11 +4,10 @@ namespace KnihovnaHer.Api.Interfaces
 {
     public interface IHraManager
     {
-        HraDto AddHra(HraCreateEditDto hraDto);
-        HraDto? DeleteHra(uint hraId);
-        IList<HraDto> GetAllHra();
-        HraDto? GetHra(uint id);
-        HraDto? UpdateHra(uint hraId, HraCreateEditDto hraDto);
-
+        Task<HraDto> AddHraAsync(HraCreateEditDto hraDto);
+        Task<HraDto?> DeleteHra(uint hraId);
+        Task<IList<HraDto>> GetAllHraAsync();
+        Task<HraDto?> GetHraAsync(uint id);
+        Task<HraDto?> UpdateHra(uint hraId, HraCreateEditDto hraDto);
     }
 }

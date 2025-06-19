@@ -3,6 +3,7 @@ using KnihovnaHer.Api.Interfaces;
 using KnihovnaHer.Dto;
 using KnihovnaHer.Data.Interfaces;
 using KnihovnaHer.Data.Models;
+using System.Threading.Tasks;
 
 namespace KnihovnaHer.Api.Managers
 {
@@ -15,17 +16,17 @@ namespace KnihovnaHer.Api.Managers
 
 
 
-        public IList<VydavatelDto> GetAllVydavatel()
+        public async Task<IList<VydavatelDto>> GetAllVydavatelAsync()
         {
-            IList<Vydavatel> vydavatel = vydavatelRepository.GetAll();
+            IList<Vydavatel> vydavatel = await vydavatelRepository.GetAllAsync();
 
             return mapper.Map<IList<VydavatelDto>>(vydavatel);
 
         }
 
-        public VydavatelDto? GetVydavatel(uint id)
+        public async Task<VydavatelDto?> GetVydavatelAsync(uint id)
         {
-            Vydavatel? vydavatel = vydavatelRepository.FindById(id);
+            Vydavatel? vydavatel = await vydavatelRepository.FindByIdAsync(id);
             if (vydavatel is null)
                 return null;
 
@@ -35,11 +36,11 @@ namespace KnihovnaHer.Api.Managers
         }
 
 
-        public VydavatelDto AddVydavatel(VydavatelDto vydavatelDto)
+        public async Task<VydavatelDto> AddVydavatelAsync(VydavatelDto vydavatelDto)
         {
             Vydavatel vydavatel = mapper.Map<Vydavatel>(vydavatelDto);
             vydavatel.VydavatelId = default;
-            Vydavatel addedVydavatel = vydavatelRepository.Insert(vydavatel);
+            Vydavatel addedVydavatel = await vydavatelRepository.InsertAsync(vydavatel);
 
             return mapper.Map<VydavatelDto>(addedVydavatel);
 
@@ -47,15 +48,15 @@ namespace KnihovnaHer.Api.Managers
         }
 
 
-        public VydavatelDto? EditVydavatel(uint vydatavatelId,VydavatelDto vydavatelDto)
+        public async Task<VydavatelDto?> EditVydavatelAsync(uint vydatavatelId,VydavatelDto vydavatelDto)
         {
          
-            if(!vydavatelRepository.ExistsWithId(vydatavatelId))
+            if(! await vydavatelRepository.ExistsWithIdAsync(vydatavatelId))
                 return null;
 
             Vydavatel vydavatel = mapper.Map<Vydavatel>(vydavatelDto);
             vydavatel.VydavatelId = vydatavatelId;
-            Vydavatel uppdatedVydavatel = vydavatelRepository.Update(vydavatel);
+            Vydavatel uppdatedVydavatel = await vydavatelRepository.UpdateAsync(vydavatel);
 
             return mapper.Map<VydavatelDto>(uppdatedVydavatel);
 
@@ -63,17 +64,17 @@ namespace KnihovnaHer.Api.Managers
         }
 
 
-        public VydavatelDto? DeleteVydavatel(uint vydavatelId)
+        public async Task<VydavatelDto?> DeleteVydavatelAsync(uint vydavatelId)
         {
-            Vydavatel? vydavatel = vydavatelRepository.FindById(vydavatelId);
+            Vydavatel? vydavatel = await vydavatelRepository.FindByIdAsync(vydavatelId);
             if(vydavatel is null)
                 return null;
 
             VydavatelDto deletedVydavatel = mapper.Map<VydavatelDto>(vydavatel);
 
             vydavatel.Hry.Clear();
-            vydavatelRepository.Update(vydavatel);
-            vydavatelRepository.Delete(vydavatelId);
+           await vydavatelRepository.UpdateAsync(vydavatel);
+           await vydavatelRepository.DeleteAsync(vydavatelId);
 
             return deletedVydavatel;
 

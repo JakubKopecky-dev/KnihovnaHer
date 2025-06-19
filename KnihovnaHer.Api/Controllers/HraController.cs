@@ -15,14 +15,14 @@ namespace KnihovnaHer.Api.Controllers
 
         [Authorize(Roles = UserRoles.User)]
         [HttpGet]
-        public IEnumerable<HraDto> GetHry() => hraManager.GetAllHra();
+        public async Task<IEnumerable<HraDto>> GetHry() => await hraManager.GetAllHraAsync();
 
 
         [Authorize(Roles = UserRoles.User)]
         [HttpGet("{hraId}")]
-        public IActionResult GetHra(uint hraId)
+        public async Task<IActionResult> GetHra(uint hraId)
         {
-            HraDto? hraDto = hraManager.GetHra(hraId);
+            HraDto? hraDto = await hraManager.GetHraAsync(hraId);
 
             if(hraDto is null) 
                 return NotFound();
@@ -33,9 +33,9 @@ namespace KnihovnaHer.Api.Controllers
 
         [Authorize(Roles =UserRoles.Admin)]
         [HttpPost]
-        public IActionResult AddHra([FromBody] HraCreateEditDto hra)
+        public async Task<IActionResult> AddHra([FromBody] HraCreateEditDto hra)
         {
-            HraDto addedHra = hraManager.AddHra(hra);
+            HraDto addedHra = await hraManager.AddHraAsync(hra);
 
             return CreatedAtAction(nameof(GetHra), new { hraId = addedHra.HraId }, addedHra);
 
@@ -45,9 +45,9 @@ namespace KnihovnaHer.Api.Controllers
 
         [Authorize(Roles = UserRoles.Admin)]
         [HttpPut("{hraId}")]
-        public IActionResult EditHra(uint hraId, [FromBody] HraCreateEditDto hra)
+        public async Task<IActionResult> EditHra(uint hraId, [FromBody] HraCreateEditDto hra)
         {
-            HraDto? updatedHra = hraManager.UpdateHra(hraId, hra);
+            HraDto? updatedHra = await hraManager.UpdateHra(hraId, hra);
 
             if (updatedHra is null)
                 return NotFound();
@@ -58,9 +58,9 @@ namespace KnihovnaHer.Api.Controllers
 
         [Authorize(Roles = UserRoles.Admin)]
         [HttpDelete("{hraId}")]
-        public IActionResult DeleteHra(uint hraId)
+        public async Task<IActionResult> DeleteHra(uint hraId)
         {
-           HraDto? deletedHra = hraManager.DeleteHra(hraId);
+           HraDto? deletedHra = await hraManager.DeleteHra(hraId);
 
             if (deletedHra is null) 
                 return NotFound();

@@ -17,40 +17,40 @@ namespace KnihovnaHer.Api.Managers
 
 
 
-        public async Task<IList<StatusHryViewDto>> GetAllStatusForUser (string uzivatelId)
+        public async Task<IList<StatusHryViewDto>> GetAllStatusForUserAsync (string uzivatelId)
         {
             Uzivatel? uzivatel = await userManager.FindByIdAsync(uzivatelId);
             if (uzivatel is null)
                 return [];
 
 
-           IList<StatusHry> statusHry = statusHryRepository.FindByUzivatelId(uzivatelId);
+           IList<StatusHry> statusHry = await statusHryRepository.FindByUzivatelIdAsync(uzivatelId);
 
             return mapper.Map<IList<StatusHryViewDto>>(statusHry);
         }
 
-        public StatusHryViewDto AddStatusHry(StatusHryCreateDto statusHryDto,string userId)
+        public async Task<StatusHryViewDto> AddStatusHryAsync(StatusHryCreateDto statusHryDto,string userId)
         {
             StatusHry statusHry = mapper.Map<StatusHry>(statusHryDto);
             statusHry.StatusHryId = default;
             statusHry.Stav = StavHry.Nova;
             statusHry.UzivatelId = userId;
-            StatusHry addedStatus =  statusHryRepository.Insert(statusHry);
+            StatusHry addedStatus = await statusHryRepository.InsertAsync(statusHry);
 
-            StatusHry withIncludes = statusHryRepository.FindByIdWithInclude(addedStatus.StatusHryId)!;
+            StatusHry withIncludes = (await statusHryRepository.FindByIdWithIncludeAsync(addedStatus.StatusHryId))!;
        
 
             return mapper.Map<StatusHryViewDto>(withIncludes);
 
         }
 
-        public StatusHryViewDto? EditStatusHry(uint statusHryId,StatusHryEditDto statusHryEdit)
+        public async Task<StatusHryViewDto?> UpdateStatusHryAsync(uint statusHryId,StatusHryUpdateDto statusHryEdit)
         {
-            StatusHry? statusHryDb = statusHryRepository.FindById(statusHryId);
+            StatusHry? statusHryDb = await statusHryRepository.FindByIdAsync(statusHryId);
             if(statusHryDb is null) 
                 return null;
 
-            mapper.Map<StatusHryEditDto, StatusHry>(statusHryEdit, statusHryDb);
+            mapper.Map<StatusHryUpdateDto, StatusHry>(statusHryEdit, statusHryDb);
 
             switch (statusHryDb.Stav)
             {
@@ -69,7 +69,7 @@ namespace KnihovnaHer.Api.Managers
                     break;
             }
 
-            StatusHry updatedStusHry = statusHryRepository.Update(statusHryDb);
+            StatusHry updatedStusHry = await statusHryRepository.UpdateAsync(statusHryDb);
 
             return mapper.Map<StatusHryViewDto>(updatedStusHry);
 
@@ -77,15 +77,15 @@ namespace KnihovnaHer.Api.Managers
 
         }
 
-        public StatusHryViewDto? DeleteStatusHry(uint statusHryId)
+        public async Task<StatusHryViewDto?> DeleteStatusHry(uint statusHryId)
         {
-           if(!statusHryRepository.ExistsWithId(statusHryId))
+           if(!await statusHryRepository.ExistsWithIdAsync(statusHryId))
                 return null;
 
-           StatusHry dbStatusHry = statusHryRepository.FindById(statusHryId)!;
+            StatusHry dbStatusHry = (await statusHryRepository.FindByIdAsync(statusHryId))!;
             StatusHryViewDto deletedStatusHry = mapper.Map<StatusHryViewDto>(dbStatusHry);
 
-            statusHryRepository.Delete(statusHryId);
+            await statusHryRepository.DeleteAsync(statusHryId);
             return deletedStatusHry;
            
 

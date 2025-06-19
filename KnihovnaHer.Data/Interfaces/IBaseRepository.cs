@@ -6,21 +6,13 @@ using System.Threading.Tasks;
 
 namespace KnihovnaHer.Data.Interfaces
 {
-    public interface IBaseRepository <TEntity> where TEntity : class
+    public interface IBaseRepository<TEntity> where TEntity : class
     {
-        IList<TEntity> GetAll ();
-
-        TEntity? FindById (uint id);
-
-        TEntity Insert (TEntity entity);
-
-        TEntity Update (TEntity entity);
-
-        void Delete (uint id);
-
-        bool ExistsWithId(uint id);
-
-
-
+        Task DeleteAsync(uint id);
+        Task<bool> ExistsWithIdAsync(uint id);
+        Task<TEntity?> FindByIdAsync(uint id);
+        Task<IList<TEntity>> GetAllAsync();
+        Task<TEntity> InsertAsync(TEntity entity);
+        Task<TEntity> UpdateAsync(TEntity entity);
     }
 }

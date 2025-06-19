@@ -98,6 +98,49 @@ namespace KnihovnaHer.Maui.Services
         }
 
 
+        // jestli je přihlášeny uživatel admin
+        public async Task<bool> IsAdminAsync()
+        {
+            var token = await GetTokenAsync();
+            if (string.IsNullOrWhiteSpace(token))
+                return false;
+
+            try
+            {
+                var payload = token.Split('.')[1];
+                var jsonBytes = Convert.FromBase64String(PadBase64(payload));
+                using var jsonDoc = JsonDocument.Parse(jsonBytes);
+
+                var root = jsonDoc.RootElement;
+
+                // Microsoft role claim
+                const string roleClaim = "http://schemas.microsoft.com/ws/2008/06/identity/claims/role";
+
+                if (root.TryGetProperty(roleClaim, out var roleElement))
+                {
+                    if (roleElement.ValueKind == JsonValueKind.String)
+                    {
+                        return roleElement.GetString()?.Equals("Admin", StringComparison.OrdinalIgnoreCase) == true;
+                    }
+                    else if (roleElement.ValueKind == JsonValueKind.Array)
+                    {
+                        foreach (var role in roleElement.EnumerateArray())
+                        {
+                            if (role.GetString()?.Equals("Admin", StringComparison.OrdinalIgnoreCase) == true)
+                                return true;
+                        }
+                    }
+                }
+
+                return false;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"[TokenStorageService] Chyba při čtení role claimu: {ex.Message}");
+                return false;
+            }
+        }
+
 
 
 

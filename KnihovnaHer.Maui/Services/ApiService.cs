@@ -571,7 +571,7 @@ namespace KnihovnaHer.Maui.Services
         }
 
         // edit statusu hry
-        public async Task<StatusHryViewDto?> UpdateStatusHryAsync(uint statusHryId, StatusHryEditDto statusHryEditDto)
+        public async Task<StatusHryViewDto?> UpdateStatusHryAsync(uint statusHryId, StatusHryUpdateDto statusHryEditDto)
         {
             try
             {

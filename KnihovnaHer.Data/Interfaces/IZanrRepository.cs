@@ -9,6 +9,6 @@ namespace KnihovnaHer.Data.Interfaces
 {
     public interface IZanrRepository : IBaseRepository<Zanr>
     {
-        IList<Zanr> FindAllByNames(IEnumerable<string> names);
+        Task<IList<Zanr>> FindAllByNamesAsync(IEnumerable<string> names);
     }
 }

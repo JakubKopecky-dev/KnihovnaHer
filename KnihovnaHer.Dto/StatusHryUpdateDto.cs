@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace KnihovnaHer.Dto
 {
-    public class StatusHryEditDto
+    public class StatusHryUpdateDto
     {
        
 

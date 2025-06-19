@@ -29,7 +29,7 @@ namespace KnihovnaHer.Maui.Services
         Task<AuthResponseDto?> LoginAsync(AuthDto authDto);
         Task<AuthResponseDto?> RegisterAsync(AuthDto authDto);
         Task<HraDto?> UpdateHraAsync(uint hraId, HraCreateEditDto hraEditDto);
-        Task<StatusHryViewDto?> UpdateStatusHryAsync(uint statusHryId, StatusHryEditDto statusHryEditDto);
+        Task<StatusHryViewDto?> UpdateStatusHryAsync(uint statusHryId, StatusHryUpdateDto statusHryEditDto);
         Task<UzivatelDto?> UpdateUzivatel(string uzivatelId, UzivatelEditDto uzivatelEditDto);
     }
 }

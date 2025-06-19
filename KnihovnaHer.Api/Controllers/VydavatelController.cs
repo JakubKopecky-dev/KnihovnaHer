@@ -1,4 +1,5 @@
-﻿using KnihovnaHer.Api.Interfaces;
+﻿using System.Threading.Tasks;
+using KnihovnaHer.Api.Interfaces;
 using KnihovnaHer.Dto;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -15,14 +16,14 @@ namespace KnihovnaHer.Api.Controllers
 
         [Authorize(Roles = UserRoles.User)]
         [HttpGet]
-        public IEnumerable<VydavatelDto> GetVydavatel() => vydavatelManager.GetAllVydavatel();
+        public async Task<IEnumerable<VydavatelDto>> GetVydavatel() => await vydavatelManager.GetAllVydavatelAsync();
 
 
         [Authorize(Roles = UserRoles.User)]
         [HttpGet("{vydavatelId}")]
-        public IActionResult GetVydavatel(uint vydavatelId)
+        public async Task<IActionResult> GetVydavatel(uint vydavatelId)
         {
-            VydavatelDto? vydavatelDto = vydavatelManager.GetVydavatel(vydavatelId);
+            VydavatelDto? vydavatelDto = await vydavatelManager.GetVydavatelAsync(vydavatelId);
 
             if(vydavatelDto is null) 
                 return NotFound();
@@ -33,9 +34,9 @@ namespace KnihovnaHer.Api.Controllers
 
         [Authorize(Roles = UserRoles.Admin)]
         [HttpPost]
-        public IActionResult AddVydavatel([FromBody] VydavatelDto vydavatelDto)
+        public async Task<IActionResult> AddVydavatel([FromBody] VydavatelDto vydavatelDto)
         {
-            VydavatelDto addedvydavatel = vydavatelManager.AddVydavatel(vydavatelDto);
+            VydavatelDto addedvydavatel = await vydavatelManager.AddVydavatelAsync(vydavatelDto);
 
             return CreatedAtAction(nameof(GetVydavatel), new {vydavatelId = addedvydavatel.VydavatelId}, addedvydavatel);
 
@@ -45,9 +46,9 @@ namespace KnihovnaHer.Api.Controllers
 
         [Authorize(Roles = UserRoles.Admin)]
         [HttpPut("{vydavatelId}")]
-        public IActionResult UpdateVydavatel(uint vydavatelId,[FromBody] VydavatelDto vydavatelDto)
+        public async Task<IActionResult> UpdateVydavatel(uint vydavatelId,[FromBody] VydavatelDto vydavatelDto)
         {
-            VydavatelDto? updatedVydatel = vydavatelManager.EditVydavatel(vydavatelId, vydavatelDto);
+            VydavatelDto? updatedVydatel = await vydavatelManager.EditVydavatelAsync(vydavatelId, vydavatelDto);
 
             if(updatedVydatel is null)
                 return NotFound();
@@ -59,9 +60,9 @@ namespace KnihovnaHer.Api.Controllers
 
         [Authorize(Roles = UserRoles.Admin)]
         [HttpDelete("{vydavatelId}")]
-        public IActionResult DeleteVydavatel(uint vydavatelId)
+        public async Task<IActionResult> DeleteVydavatel(uint vydavatelId)
         {
-            VydavatelDto? deletedVydavatel = vydavatelManager.DeleteVydavatel(vydavatelId);
+            VydavatelDto? deletedVydavatel = await vydavatelManager.DeleteVydavatelAsync(vydavatelId);
             if(deletedVydavatel is null)
                 return NotFound();
             return Ok(deletedVydavatel);

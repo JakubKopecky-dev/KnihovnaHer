@@ -20,15 +20,10 @@ namespace KnihovnaHer.Api.Managers
         public async Task<IList<UzivatelDto>> GetAllUzivatelAsync()
         {
             var uzivatele =  await userManager.Users.ToListAsync();
-            List<UzivatelDto> uzivatelDtos = [];
 
-           foreach (var u in uzivatele)
-            {
-                UzivatelDto uzivatelDto = mapper.Map<UzivatelDto>(u);
-                uzivatelDtos.Add(uzivatelDto);
-                
-            }
-           return uzivatelDtos;
+
+            return mapper.Map<IList<UzivatelDto>>(uzivatele);
+           
         }
 
 
@@ -112,10 +107,10 @@ namespace KnihovnaHer.Api.Managers
             if (roles.Any())
                 await userManager.RemoveFromRolesAsync(uzivatel, roles);
 
-            var statusyHerUzivatele = statusHryRepository.FindByUzivatelId(id);
+            var statusyHerUzivatele = await statusHryRepository.FindByUzivatelIdAsync(id);
 
             foreach(var s in statusyHerUzivatele)
-                statusHryRepository.Delete(s.StatusHryId);
+               await statusHryRepository.DeleteAsync(s.StatusHryId);
 
             await userManager.UpdateAsync(uzivatel);
 

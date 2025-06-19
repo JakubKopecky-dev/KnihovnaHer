@@ -8,75 +8,96 @@
     x:DataType="viewModels:RegisterViewModel"
     BackgroundColor="#f2f2f2">
 
-    <ScrollView>
-        <VerticalStackLayout
-            Padding="32"
-            Spacing="24"
-            VerticalOptions="Center">
-            <Border
-                Padding="24"
-                BackgroundColor="White"
-                Stroke="#ddd"
-                StrokeShape="RoundRectangle 16"
-                StrokeThickness="1">
-                <VerticalStackLayout Spacing="16">
-                    <Label
-                        FontSize="24"
-                        HorizontalOptions="Center"
-                        Text="Vytvořte si účet" />
+    <Grid>
+        <ScrollView>
+            <VerticalStackLayout
+                Padding="32"
+                HorizontalOptions="Center"
+                MaximumWidthRequest="800"
+                Spacing="24"
+                VerticalOptions="Center">
+                <!--  Zvýšeno  -->
 
-                    <Border
-                        Padding="10"
-                        BackgroundColor="#eeeeee"
-                        StrokeShape="RoundRectangle 8">
-                        <Entry
-                            Keyboard="Email"
-                            Placeholder="Email"
-                            Text="{Binding Email}" />
-                    </Border>
+                <Border
+                    Padding="24"
+                    BackgroundColor="White"
+                    HorizontalOptions="Fill"
+                    MinimumWidthRequest="500"
+                    Stroke="#ddd"
+                    StrokeShape="RoundRectangle 16"
+                    StrokeThickness="1">
+                    <!--  Zvýšeno  -->
 
-                    <Border
-                        Padding="10"
-                        BackgroundColor="#eeeeee"
-                        StrokeShape="RoundRectangle 8">
-                        <Entry
-                            IsPassword="True"
-                            Placeholder="Heslo"
-                            Text="{Binding Password}" />
-                    </Border>
+                    <VerticalStackLayout HorizontalOptions="Fill" Spacing="20">
 
-                    <Border
-                        Padding="10"
-                        BackgroundColor="#eeeeee"
-                        StrokeShape="RoundRectangle 8">
-                        <Entry
-                            IsPassword="True"
-                            Placeholder="Potvrdit heslo"
-                            Text="{Binding ConfirmPassword}" />
-                    </Border>
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="26"
+                            HorizontalOptions="Center"
+                            Text="Vytvořte si účet"
+                            TextColor="#222" />
 
-                    <Label
-                        FontSize="12"
-                        HorizontalOptions="Center"
-                        IsVisible="{Binding HasError}"
-                        Text="{Binding ErrorMessage}"
-                        TextColor="Red" />
+                        <Border
+                            Padding="10"
+                            BackgroundColor="#f0f0f0"
+                            StrokeShape="RoundRectangle 8">
+                            <Entry
+                                HorizontalOptions="Fill"
+                                Keyboard="Email"
+                                Placeholder="Email"
+                                Text="{Binding Email}" />
+                        </Border>
 
-                    <Button
-                        BackgroundColor="#28a745"
-                        Clicked="OnRegisterClicked"
-                        CornerRadius="12"
-                        Text="Registrovat"
-                        TextColor="White" />
+                        <Border
+                            Padding="10"
+                            BackgroundColor="#f0f0f0"
+                            StrokeShape="RoundRectangle 8">
+                            <Entry
+                                HorizontalOptions="Fill"
+                                IsPassword="True"
+                                Placeholder="Heslo"
+                                Text="{Binding Password}" />
+                        </Border>
 
-                    <Button
-                        BackgroundColor="Transparent"
-                        Clicked="OnLoginClicked"
-                        FontSize="14"
-                        Text="Zpět na přihlášení"
-                        TextColor="#007AFF" />
-                </VerticalStackLayout>
-            </Border>
-        </VerticalStackLayout>
-    </ScrollView>
+                        <Border
+                            Padding="10"
+                            BackgroundColor="#f0f0f0"
+                            StrokeShape="RoundRectangle 8">
+                            <Entry
+                                HorizontalOptions="Fill"
+                                IsPassword="True"
+                                Placeholder="Potvrdit heslo"
+                                Text="{Binding ConfirmPassword}" />
+                        </Border>
+
+                        <Label
+                            FontSize="12"
+                            HorizontalOptions="Center"
+                            IsVisible="{Binding HasError}"
+                            LineBreakMode="WordWrap"
+                            Text="{Binding ErrorMessage}"
+                            TextColor="Red" />
+
+                        <Button
+                            Padding="12"
+                            BackgroundColor="#28a745"
+                            Clicked="OnRegisterClicked"
+                            CornerRadius="12"
+                            FontSize="16"
+                            HorizontalOptions="Fill"
+                            Text="Registrovat"
+                            TextColor="White" />
+
+                        <Button
+                            BackgroundColor="Transparent"
+                            Clicked="OnLoginClicked"
+                            FontSize="14"
+                            HorizontalOptions="Center"
+                            Text="Zpět na přihlášení"
+                            TextColor="#007AFF" />
+                    </VerticalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
 </ContentPage>

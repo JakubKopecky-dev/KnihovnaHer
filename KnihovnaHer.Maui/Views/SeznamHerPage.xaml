@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
     x:Class="KnihovnaHer.Maui.Views.SeznamHerPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
@@ -7,136 +8,129 @@
     Title="🎮 Seznam Her - Administrátor"
     x:DataType="viewModels:SeznamHerViewModel">
 
-    <Grid>
-        <ScrollView>
-            <VerticalStackLayout
+    <Grid BackgroundColor="#f2f2f2" RowDefinitions="Auto,*">
+
+        <!--  Tlačítka  -->
+        <ScrollView Grid.Row="0" Orientation="Horizontal">
+            <FlexLayout
                 Padding="16"
-                BackgroundColor="#f2f2f2"
-                Spacing="12">
+                Direction="Row"
+                JustifyContent="Start"
+                Wrap="Wrap">
+                <Button
+                    Margin="5"
+                    BackgroundColor="#4caf50"
+                    Clicked="OnAddGameClicked"
+                    CornerRadius="8"
+                    FontSize="14"
+                    HeightRequest="40"
+                    Text="Přidat hru"
+                    TextColor="White"
+                    WidthRequest="140" />
 
-                <!--  Tlačítka  -->
-                <HorizontalStackLayout Margin="0,0,0,7" Spacing="30">
-                    <Button
-                        Padding="10"
-                        BackgroundColor="#4caf50"
-                        Clicked="OnAddGameClicked"
-                        FontSize="16"
-                        HorizontalOptions="Center"
-                        Text="Přidat hru"
-                        TextColor="White" />
 
-                    <Button
-                        Padding="10"
-                        BackgroundColor="#1115d9"
-                        Clicked="OnZanrVydavatelClicked"
-                        FontSize="16"
-                        HorizontalOptions="Center"
-                        Text="Žárny a Vydavatelé"
-                        TextColor="White" />
-                </HorizontalStackLayout>
-
-                <!--  CollectionView (viditelné jen když nenačítá)  -->
-                <CollectionView IsVisible="{Binding IsLoading, Converter={StaticResource InverseBoolConverter}}" ItemsSource="{Binding Hry}">
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate x:DataType="models:HraDto">
-                            <Border
-                                Margin="0,5"
-                                Padding="12"
-                                BackgroundColor="White"
-                                Stroke="#cccccc"
-                                StrokeShape="RoundRectangle 12"
-                                StrokeThickness="1">
-
-                                <Grid
-                                    ColumnDefinitions="2*,2*,1*,3*,auto"
-                                    ColumnSpacing="10"
-                                    RowDefinitions="Auto">
-
-                                    <Label
-                                        Grid.Column="0"
-                                        FontAttributes="Bold"
-                                        FontSize="18"
-                                        Text="{Binding Nazev}"
-                                        TextColor="#222"
-                                        VerticalOptions="Center" />
-
-                                    <Label
-                                        Grid.Column="1"
-                                        FontSize="14"
-                                        Text="{Binding Vydavatel.Nazev}"
-                                        TextColor="#555"
-                                        VerticalOptions="Center" />
-
-                                    <Label
-                                        Grid.Column="2"
-                                        FontSize="14"
-                                        Text="{Binding RokVydani}"
-                                        TextColor="#777"
-                                        VerticalOptions="Center" />
-
-                                    <FlexLayout
-                                        Grid.Column="3"
-                                        AlignItems="Center"
-                                        BindableLayout.ItemsSource="{Binding Zanry}"
-                                        Direction="Row"
-                                        JustifyContent="Start"
-                                        Wrap="Wrap">
-                                        <BindableLayout.ItemTemplate>
-                                            <DataTemplate x:DataType="x:String">
-                                                <Border
-                                                    Margin="2"
-                                                    Padding="6,2"
-                                                    BackgroundColor="#e0e0e0"
-                                                    StrokeShape="RoundRectangle 8">
-                                                    <Label
-                                                        FontSize="12"
-                                                        Text="{Binding}"
-                                                        TextColor="#333" />
-                                                </Border>
-                                            </DataTemplate>
-                                        </BindableLayout.ItemTemplate>
-                                    </FlexLayout>
-
-                                    <HorizontalStackLayout
-                                        Grid.Column="4"
-                                        HorizontalOptions="End"
-                                        Spacing="15"
-                                        VerticalOptions="Center">
-
-                                        <Button
-                                            Padding="8,4"
-                                            BackgroundColor="#FFC107"
-                                            Clicked="OnEditHraClicked"
-                                            CornerRadius="10"
-                                            FontSize="15"
-                                            HeightRequest="36"
-                                            HorizontalOptions="Center"
-                                            Text="Upravit"
-                                            TextColor="Black"
-                                            WidthRequest="90" />
-
-                                        <Button
-                                            Padding="8,4"
-                                            BackgroundColor="#F44336"
-                                            Clicked="OnDeleteHraClicked"
-                                            CornerRadius="10"
-                                            FontSize="15"
-                                            HeightRequest="30"
-                                            HorizontalOptions="Center"
-                                            Text="Odstranit"
-                                            TextColor="Black"
-                                            WidthRequest="90" />
-                                    </HorizontalStackLayout>
-                                </Grid>
-                            </Border>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
-            </VerticalStackLayout>
+            </FlexLayout>
         </ScrollView>
 
-        <!--  Spinner přes CollectionView  -->
+        <!--  Seznam her  -->
+        <CollectionView
+            Grid.Row="1"
+            IsVisible="{Binding IsLoading, Converter={StaticResource InverseBoolConverter}}"
+            ItemsSource="{Binding Hry}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:HraDto">
+                    <Border
+                        Margin="0,10"
+                        Padding="16"
+                        BackgroundColor="White"
+                        HorizontalOptions="Center"
+                        MaximumWidthRequest="700"
+                        Stroke="#cccccc"
+                        StrokeShape="RoundRectangle 12"
+                        StrokeThickness="1">
+
+                        <Grid
+                            ColumnDefinitions="3*,auto"
+                            ColumnSpacing="12"
+                            RowDefinitions="Auto,Auto,Auto,Auto"
+                            RowSpacing="6">
+
+                            <Label
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                FontAttributes="Bold"
+                                FontSize="20"
+                                Text="{Binding Nazev}" />
+                            <Label
+                                Grid.Row="1"
+                                Grid.Column="0"
+                                FontSize="14"
+                                Text="{Binding Vydavatel.Nazev}"
+                                TextColor="#555" />
+                            <Label
+                                Grid.Row="2"
+                                Grid.Column="0"
+                                FontSize="14"
+                                Text="{Binding RokVydani}"
+                                TextColor="#777" />
+
+                            <FlexLayout
+                                Grid.Row="3"
+                                Grid.Column="0"
+                                Margin="0,5,0,0"
+                                AlignItems="Center"
+                                BindableLayout.ItemsSource="{Binding Zanry}"
+                                Direction="Row"
+                                Wrap="Wrap">
+                                <BindableLayout.ItemTemplate>
+                                    <DataTemplate x:DataType="x:String">
+                                        <Border
+                                            Margin="2"
+                                            Padding="6,2"
+                                            BackgroundColor="#e0e0e0"
+                                            StrokeShape="RoundRectangle 8">
+                                            <Label
+                                                FontSize="12"
+                                                Text="{Binding}"
+                                                TextColor="#333" />
+                                        </Border>
+                                    </DataTemplate>
+                                </BindableLayout.ItemTemplate>
+                            </FlexLayout>
+
+                            <VerticalStackLayout
+                                Grid.RowSpan="4"
+                                Grid.Column="1"
+                                Spacing="10"
+                                VerticalOptions="Center">
+                                <Button
+                                    BackgroundColor="#FFC107"
+                                    Clicked="OnEditHraClicked"
+                                    CornerRadius="10"
+                                    FontSize="14"
+                                    HeightRequest="36"
+                                    Text="Upravit"
+                                    TextColor="Black"
+                                    WidthRequest="90" />
+
+                                <Button
+                                    BackgroundColor="#F44336"
+                                    Clicked="OnDeleteHraClicked"
+                                    CornerRadius="10"
+                                    FontSize="14"
+                                    HeightRequest="36"
+                                    Text="Odstranit"
+                                    TextColor="White"
+                                    WidthRequest="90" />
+                            </VerticalStackLayout>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
         <ActivityIndicator
+            Grid.RowSpan="2"
             HeightRequest="80"
             HorizontalOptions="Center"
             IsRunning="{Binding IsLoading}"

@@ -30,12 +30,7 @@ public partial class SeznamHerPage : ContentPage
     }
 
 
-    // TLA»ÕTKO û·nry a vydavatelÈ
-    private async void OnZanrVydavatelClicked(object sender,EventArgs e)
-    {
-        await Shell.Current.GoToAsync(nameof(ZanrVydavatelPage));
-    }
-
+  
 
 
     // TLA»ÕTKO EDITOVAT na seznamu her
