@@ -121,7 +121,6 @@ namespace KnihovnaHer.Maui.Services
             try
             {
                 var response = await httpClient.DeleteAsync($"Hra/{hraId}");
-
                 if (response.IsSuccessStatusCode)
                 {
                     var responseContent = await response.Content.ReadAsStringAsync();
